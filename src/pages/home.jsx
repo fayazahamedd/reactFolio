@@ -54,7 +54,7 @@ const Home = ({ setActive }) => {
             <img
               className="h-[85vh]"
               // src="/images/imgaboutNew1.png"
-              href="https://main--portfoliofeedbackform.netlify.app/images/imgaboutNew1.png"
+              src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724486650/feedback/gcw8rgqbedbdsqrlhmuj.png"
               alt="Post 1"
             />
           </p>
