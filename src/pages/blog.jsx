@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// pages/Work.jsx
 import { faConnectdevelop } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
@@ -23,10 +21,10 @@ const Blog = ({ setActive }) => {
         <div className="flex flex-col w-[30%] shadow-sm">
           <img
             className="h-[60%] w-full object-cover"
-            src="../images/post-1.jpg"
+            src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485794/feedback/ausssmyaqfickk41hz6c.jpg"
             alt="Post 1"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[120px] top-[64%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
             TRAVEL
           </p>
           <div className="h-20  bg-white shadow-2xl">
@@ -43,10 +41,10 @@ const Blog = ({ setActive }) => {
         <div className="flex-col w-[30%]">
           <img
             className="h-[60%] w-full object-cover"
-            src="../images/post-2.jpg"
+            src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485795/feedback/iagrpuyu1axea2u0egps.jpg"
             alt="Post 2"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[120px] top-[64%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
             FOOD
           </p>
           <div className="h-20 bg-white shadow-2xl">
@@ -63,10 +61,10 @@ const Blog = ({ setActive }) => {
         <div className="flex-col w-[30%]">
           <img
             className="h-[60%] w-full object-cover"
-            src="../images/post-3.jpg"
+            src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485795/feedback/bmhm1edj0tiko4zhdcuu.jpg"
             alt="Post 3"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[120px] top-[64%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
             DEVELOP
           </p>
           <div className="h-20 bg-white shadow-2xl">

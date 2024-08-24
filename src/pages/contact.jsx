@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// pages/Work.jsx
 import {
   faFacebook,
   faInstagram,
@@ -22,20 +20,20 @@ const Contact = ({ setActive }) => {
   }, [setActive]);
 
   return (
-    <div className="flex flex-row w-full h-full mb-6 ml-11 mr-12 justify-between">
-      <div className="flex flex-col w-[1/2] ">
+    <div className="flex flex-row w-full h-full my-6 ml-11 mr-12 justify-between">
+      <div className="flex flex-col w-1/2">
         <form role="form" className="bg-white shadow-xl rounded-md h-full ">
           <h1 className="text-center font-extrabold text-[19px] m-4 ">
             Send Message
           </h1>
           <div id="errormessage"></div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1">
             <div className="m-3">
               <div className="form-group">
                 <input
                   type="text"
                   name="name"
-                  className="form-control h-10 rounded-lg border border-blue text-left p-2"
+                  className="form-control w-[100%] h-10 rounded-lg border border-blue text-left p-2"
                   id="name"
                   placeholder="Your Name"
                   data-rule="minlen:4"
@@ -43,18 +41,19 @@ const Contact = ({ setActive }) => {
                 />
               </div>
             </div>
-
-            <div className="m-3">
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control h-10 rounded-lg border border-blue text-left p-2"
-                  name="subject"
-                  id="subject"
-                  placeholder="Subject"
-                  data-rule="minlen:4"
-                  data-msg="Please enter at least 8 chars of subject"
-                />
+            <div className="grid grid-cols-1">
+              <div className="m-3">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="fform-control w-[100%] h-10 rounded-lg border border-blue text-left p-2"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                    data-rule="minlen:4"
+                    data-msg="Please enter at least 8 chars of subject"
+                  />
+                </div>
               </div>
             </div>
           </div>

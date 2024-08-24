@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import ProgressSkill from "../Components/progressSkill";
 import skills from "../assets/data";
@@ -20,7 +18,7 @@ const Skills = ({ setActive }) => {
         Far far away, behind the word mountains, far from the countries Vokalia
         and Consonantia
       </p>
-      <div className="flex flex-row flex-wrap justify-center">
+      <div className="flex flex-row flex-wrap">
         {skills?.map((item, index) => (
             <ProgressSkill key={index} progress={item} />
         ))}

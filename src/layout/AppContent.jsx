@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/home";
 import About from "../pages/about";
@@ -12,7 +11,7 @@ import Error from "../pages/404";
 const AppContent = ({ setActive }) => {
   return (
     <>
-      <div className="flex justify-center h-fit w-full">
+      <div className="flex justify-center h-full w-full">
         <Routes>
           <Route path="/" element={<Home setActive={setActive} />} />
           <Route path="/home" element={<Home setActive={setActive} />} />

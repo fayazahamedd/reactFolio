@@ -5,7 +5,7 @@ const Error = () => {
   return (
     <img
       className="h-[85vh] mt-4 items-center w-[50vw] rounded-2xl cursor-pointer"
-      src="../images/404.jpg"
+      src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485797/feedback/f1cwlrbpwq6gk50gtrtp.jpg"
       alt="Post 1"
       onClick={() => navigate("/home")}
     />

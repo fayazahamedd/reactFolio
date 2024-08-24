@@ -9,7 +9,7 @@ const DefaultLayout = ({ active, setActive }) => {
           active === "home" ? "bg-grey-dark" : "bg-grey"
         }`}
       >
-        <div className="mt-2 shadow w-full">
+        <div className="mt-2 shadow w-full overflow-y-auto">
           <NavBar active={active} setActive={setActive} />
           <div className="flex flex-grow justify-center">
             <AppContent setActive={setActive} />

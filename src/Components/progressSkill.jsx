@@ -10,15 +10,15 @@ const ProgressSkill = ({ progress }) => {
       <div className="flex items-center w-28 h-28 mt-2">
         <CircleProgress percentage={progress.percentage} />
       </div>
-      <div className="flex flex-row mt-5 justify-center">
-        <div className="flex flex-col items-center">
+      <div className="flex flex-row mt-5 justify-center px-4">
+        <div className="flex flex-col items-center mr-2">
           <h1 className="font-extrabold text-center text-blue">
             {progress.last_week}%
           </h1>
           <p className="font-bold">Last Week</p>
         </div>
-        <div className="h-12 w-1 bg-true-black flex flex-row mx-2"></div>
-        <div className="flex flex-col items-center">
+        <div className="h-12 w-1 bg-true-black flex flex-row m-2"></div>
+        <div className="flex flex-col items-center ml-2">
           <h1 className="font-extrabold text-center text-blue">
             {progress.last_month}%
           </h1>
