@@ -24,7 +24,7 @@ const Blog = ({ setActive }) => {
             src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485794/feedback/ausssmyaqfickk41hz6c.jpg"
             alt="Post 1"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[63.5%] justify-center">
             TRAVEL
           </p>
           <div className="h-20  bg-white shadow-2xl">
@@ -44,7 +44,7 @@ const Blog = ({ setActive }) => {
             src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485795/feedback/iagrpuyu1axea2u0egps.jpg"
             alt="Post 2"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[63.5%] justify-center">
             FOOD
           </p>
           <div className="h-20 bg-white shadow-2xl">
@@ -64,7 +64,7 @@ const Blog = ({ setActive }) => {
             src="https://res.cloudinary.com/dcfejifrx/image/upload/v1724485795/feedback/bmhm1edj0tiko4zhdcuu.jpg"
             alt="Post 3"
           />
-          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[60%] justify-center">
+          <p className="text-white font-extrabold text-center bg-blue w-[10%] rounded-md absolute ml-[145px] top-[63.5%] justify-center">
             DEVELOP
           </p>
           <div className="h-20 bg-white shadow-2xl">

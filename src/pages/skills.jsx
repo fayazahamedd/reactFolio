@@ -18,7 +18,7 @@ const Skills = ({ setActive }) => {
         Far far away, behind the word mountains, far from the countries Vokalia
         and Consonantia
       </p>
-      <div className="flex flex-row flex-wrap">
+      <div className="flex flex-row flex-wrap justify-center">
         {skills?.map((item, index) => (
             <ProgressSkill key={index} progress={item} />
         ))}
