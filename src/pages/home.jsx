@@ -53,7 +53,7 @@ const Home = ({ setActive }) => {
           <p>
             <img
               className="h-[85vh]"
-              src="../images/imgaboutNew1.png"
+              src="https://moonlit-chimera-24bc6f.netlify.app//images/imgaboutNew1.png"
               alt="Post 1"
             />
           </p>
