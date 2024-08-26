@@ -1,20 +1,11 @@
 import {
   faPen,
-  faPlus,
   faThumbsUp,
   faLessThan,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import FormDialog from "../../Components/dialog";
-import { feedbackIcons } from "../../assets/data";
-import { iconMapping } from "../../assets/data";
-import {
-  DatePickerFormComp,
-  TimePickerFormComp,
-  SwitchComp,
-} from "../../Components/formComponent";
 import {
   TextArea,
   NumbericRating,
@@ -24,6 +15,9 @@ import {
   RadioButton,
   CategoryRating,
 } from "./components";
+import RightPanel from "./panel/rightPanel";
+import EditPanel from "./panel/editPanel";
+import { Edit } from "@mui/icons-material";
 
 const componentMapping = {
   TextArea,
@@ -50,15 +44,19 @@ const CreateForm = ({ setActive }) => {
   const [timeValue, setTimeValue] = useState(null);
 
   // Component States
-  const [inputTextArea, setInputTextArea] = useState("");
-  const [numberRating, setNumberRating] = useState(null);
-  const [startRating, setStartRating] = useState(0);
-  const [emojiRating, setEmojiRating] = useState(null);
-  const [inputTextRating, setInputTextRating] = useState("");
-  const [radioButtonRating, setRadioButtonRating] = useState(null);
+  // const [inputTextArea, setInputTextArea] = useState("");
+  // const [numberRating, setNumberRating] = useState(null);
+  // const [startRating, setStartRating] = useState(0);
+  // const [emojiRating, setEmojiRating] = useState(null);
+  // const [inputTextRating, setInputTextRating] = useState("");
+  // const [radioButtonRating, setRadioButtonRating] = useState("");
 
   const [components, setComponents] = useState([]);
   const [componentStates, setComponentStates] = useState({});
+  const [errorStates, setErrorStates] = useState({});
+
+  const [openEditPanel, setOpenEditPanel] = useState(false);
+  const [editPanelData, setEditPanelData] = useState([]);
 
   console.log("components", components);
   console.log("componentStates", componentStates);
@@ -70,26 +68,68 @@ const CreateForm = ({ setActive }) => {
   const addComponent = (componentName) => {
     setComponents((prevComponents) => [
       ...prevComponents,
-      { name: componentName, id: Date.now() },
+      { ...componentName, id: Date.now() },
     ]);
+  };
+
+  const updateComponentState = (id, newState, component) => {
+    setComponentStates((prevState) => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        ...newState,
+        ...component,
+      },
+    }));
+    setErrorStates((prevErrors) => ({
+      ...prevErrors,
+      [id]: false, // Reset error state on update
+    }));
+  };
+
+  const validateComponents = () => {
+    let hasError = false;
+    const newErrorStates = {};
+
+    components.forEach((component) => {
+      const componentState = componentStates[component.id];
+
+      if (
+        (component.name === "StarRating" && !componentState?.startRating) ||
+        (component.name === "NumbericRating" &&
+          !componentState?.numberRating) ||
+        (component.name === "EmojiRating" && !componentState?.emojiRating)
+      ) {
+        newErrorStates[component.id] = true;
+        hasError = true;
+      }
+    });
+
+    setErrorStates(newErrorStates);
   };
 
   const removeComponent = (id) => {
     setComponents((prevComponents) =>
       prevComponents.filter((component) => component.id !== id)
     );
+    setComponentStates((prevStates) => {
+      const { [id]: _, ...remainingStates } = prevStates;
+      return remainingStates;
+    });
+    setErrorStates((prevErrors) => {
+      const { [id]: _, ...remainingErrors } = prevErrors;
+      return remainingErrors;
+    });
   };
 
-  const updateComponentState = (id, newState) => {
-    const length = Object.entries(componentStates).length;
-    console.log(length, "updateComponentState")
-    setComponentStates((prevState) => ({
-      ...prevState,
-      [id]: {
-        ...prevState[id],
-        ...newState,
-      },
-    }));
+  useEffect(() => {
+    validateComponents();
+  }, [components]);
+
+  const handleOpenEditPanel = (item) => {
+    console.log("edit", item);
+    setEditPanelData(item);
+    setOpenEditPanel(true);
   };
 
   return (
@@ -114,7 +154,7 @@ const CreateForm = ({ setActive }) => {
       </div>
       <div className="flex mb-2">
         {/* Center Panel */}
-        <div className="flex flex-grow flex-col items-center justify-start mt-4 overflow-y-auto h-[calc(100vh)]">
+        <div className="flex flex-grow flex-col items-center justify-start mt-4 overflow-y-auto">
           <div className="flex flex-row bg-[#5578F4] items-center justify-between p-2 w-full max-w-[400px]">
             <p className="flex items-center">
               <FontAwesomeIcon
@@ -140,15 +180,21 @@ const CreateForm = ({ setActive }) => {
 
             {components.map((component) => {
               const Component = componentMapping[component.name];
-              const componentState = componentStates[component.id] || {}; // Get or initialize state for this component
+              const componentState = componentStates[component.id] || {};
+              const hasError = errorStates[component.id] || false;
 
               return (
                 <div key={component.id} className="relative">
                   <Component
                     {...componentState}
                     updateState={(newState) =>
-                      updateComponentState(component.id, newState)
+                      updateComponentState(component.id, newState, component)
                     }
+                    hasError={hasError}
+                    // setOpenEditPanel={() => handleOpenEditPanel}
+                    removeComponent={() => removeComponent(component.id)}
+                    handleOpenEditPanel={handleOpenEditPanel}
+                    components={components}
                   />
                 </div>
               );
@@ -156,69 +202,20 @@ const CreateForm = ({ setActive }) => {
           </div>
         </div>
 
-        {/* Right Panel */}
-        <div className="flex flex-col bg-white pt-5 shadow-md">
-          <h1 className="flex text-true-black font-semibold text-xl ml-4">
-            Add Fields
-          </h1>
-
-          <div className="flex flex-col mt-2 justify-between">
-            {feedbackIcons.map((item, index) => (
-              <div className="flex justify-between" key={index}>
-                <div className="flex my-[9px] ml-5">
-                  <FontAwesomeIcon
-                    className="w-5 h-5 mt-0.5"
-                    icon={iconMapping[item.icon]}
-                  />
-                  <p className="ml-2 font-inters text-left">{item.text}</p>
-                </div>
-                <div className="flex">
-                  <FontAwesomeIcon
-                    className="w-5 h-5 ml-10 mt-3 mr-2 cursor-pointer text-[#106EA4]"
-                    icon={faPlus}
-                    onClick={() => addComponent(item.component)}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-between items-center ml-5">
-            <p className="flex font-inters">Show based on URL conditions</p>
-            <div className="flex ml-2">
-              <SwitchComp checked={inputSwitch} setChecked={setInputSwitch} />
-            </div>
-          </div>
-
-          <div className="flex">
-            <input
-              type="text"
-              name="name"
-              placeholder="https://"
-              className="ml-5 border-b-2 focus:border-gray-500 focus:outline-none w-full mr-2"
-              onChange={(e) => setInputTextURL(e.target.value)}
-              disabled={!inputSwitch}
+        <div className="flex flex-col justify-start flex-grow max-w-96">
+          {openEditPanel ? (
+            <EditPanel
+              setOpenEditPanel={setOpenEditPanel}
+              editPanelData={editPanelData}
+              setEditPanelData={setEditPanelData}
+              components={components}
+              componentStates={componentStates}
+              setComponents={setComponents}
+              setComponentStates={setComponentStates}
             />
-          </div>
-
-          <div className="flex flex-col ml-5 my-2 justify-center">
-            <div className="flex justify-between items-center">
-              <p className="font-inters text-center">Show on a specific date</p>
-              <SwitchComp checked={dateSwitch} setChecked={setSwitchDate} />
-            </div>
-            <div className="flex mt-2 mr-2">
-              <DatePickerFormComp value={dateValue} setValue={setDateValue} disabled={!dateSwitch}/>
-            </div>
-          </div>
-
-          <div className="flex flex-col ml-5 mb-2">
-            <div className="flex justify-between items-center">
-              <p className="font-inters text-center">Show on a specific time</p>
-              <SwitchComp checked={timeSwitch} setChecked={setTimeSwitch} />
-            </div>
-            <div className="flex mt-2 flex-1 mr-2">
-              <TimePickerFormComp value={timeValue} setValue={setTimeValue} disabled={!timeSwitch}/>
-            </div>
-          </div>
+          ) : (
+            <RightPanel addComponent={addComponent} />
+          )}
         </div>
       </div>
       <FormDialog open={open} setOpen={setOpen} isEdit={true} />

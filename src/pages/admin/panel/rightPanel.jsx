@@ -1,28 +1,24 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
   DatePickerFormComp,
-  SwitchComp,
   TimePickerFormComp,
-} from "../../Components/formComponent";
-import { feedbackIcons } from "../../assets/data";
-import { iconMapping } from "../../assets/data";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+  SwitchComp,
+} from "../../../Components/formComponent";
+import { feedbackIcons } from "../../../assets/data";
+import { iconMapping } from "../../../assets/data";
 
-const RightPanel = (
-  inputSwitch,
-  dateSwitch,
-  setInputSwitch,
-  dateValue,
-  setDateValue,
-  timeValue,
-  setTimeValue,
-  setTimeSwitch,
-  addComponent,
-  timeSwitch,
-  setSwitchDate
-) => {
+const RightPanel = ({ addComponent }) => {
+  const [inputSwitch, setInputSwitch] = useState(true);
+  const [dateSwitch, setSwitchDate] = useState(true);
+  const [timeSwitch, setTimeSwitch] = useState(true);
+  const [inputText, setInputTextURL] = useState("");
+  const [dateValue, setDateValue] = useState(null);
+  const [timeValue, setTimeValue] = useState(null);
+
   return (
-    <div className="flex-1">
+    <div className="flex flex-col bg-white pt-5 shadow-md">
       <h1 className="flex text-true-black font-semibold text-xl ml-4">
         Add Fields
       </h1>
@@ -39,9 +35,9 @@ const RightPanel = (
             </div>
             <div className="flex">
               <FontAwesomeIcon
-                className="w-5 h-5 ml-10 mt-0.5 mr-2 cursor-pointer text-[#106EA4]"
+                className="w-5 h-5 ml-10 mt-3 mr-2 cursor-pointer text-[#106EA4]"
                 icon={faPlus}
-                onClick={() => addComponent(item.component)}
+                onClick={() => addComponent(item)}
               />
             </div>
           </div>
@@ -60,8 +56,9 @@ const RightPanel = (
           type="text"
           name="name"
           placeholder="https://"
-          className="ml-5 border-b-2 border-transparent focus:border-gray-500 focus:outline-none w-full mr-2"
+          className="ml-5 border-b-2 focus:border-gray-500 focus:outline-none w-full mr-2"
           onChange={(e) => setInputTextURL(e.target.value)}
+          disabled={!inputSwitch}
         />
       </div>
 
@@ -71,7 +68,11 @@ const RightPanel = (
           <SwitchComp checked={dateSwitch} setChecked={setSwitchDate} />
         </div>
         <div className="flex mt-2 mr-2">
-          <DatePickerFormComp value={dateValue} setValue={setDateValue} />
+          <DatePickerFormComp
+            value={dateValue}
+            setValue={setDateValue}
+            disabled={!dateSwitch}
+          />
         </div>
       </div>
 
@@ -81,8 +82,15 @@ const RightPanel = (
           <SwitchComp checked={timeSwitch} setChecked={setTimeSwitch} />
         </div>
         <div className="flex mt-2 flex-1 mr-2">
-          <TimePickerFormComp value={timeValue} setValue={setTimeValue} />
+          <TimePickerFormComp
+            value={timeValue}
+            setValue={setTimeValue}
+            disabled={!timeSwitch}
+          />
         </div>
+      </div>
+      <div className="flex flex-grow h-full">
+        <p></p>
       </div>
     </div>
   );

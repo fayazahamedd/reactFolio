@@ -5,10 +5,6 @@ import {
   faSmileBeam,
   faListCheck,
   faRectangleList,
-  faPen,
-  faPlus,
-  faThumbsUp,
-  faLessThan,
   faFrown,
   faGrimace,
   faMeh,
@@ -75,17 +71,58 @@ const skills = [
 ];
 
 export const feedbackIcons = [
-  { icon: "faTextHeight", text: "Textarea", component: "TextArea" },
+  {
+    icon: "faTextHeight",
+    text: "Textarea",
+    name: "TextArea",
+    label: "Would you like to add a comment?*",
+    required: true,
+  },
   {
     icon: "faListNumeric",
     text: "Numeric rating",
-    component: "NumbericRating",
+    name: "NumbericRating",
+    label:
+      "How likely is it that you will recommend us to your family and friends?",
+    required: true,
   },
-  { icon: "faStar", text: "Star rating", component: "StarRating" },
-  { icon: "faSmileBeam", text: "Smiley rating", component: "EmojiRating" },
-  { icon: "faTextWidth", text: "Single line input", component: "InputText" },
-  { icon: "faListCheck", text: "Radio button", component: "RadioButton" },
-  { icon: "faRectangleList", text: "Categories", component: "CategoryRating" },
+  {
+    icon: "faStar",
+    text: "Star rating",
+    name: "StarRating",
+    label: "Give a star rating for the website.",
+    required: true,
+  },
+  {
+    icon: "faSmileBeam",
+    text: "Smiley rating",
+    name: "EmojiRating",
+    label: "What is your opinion of this page?",
+    required: true,
+  },
+  {
+    icon: "faTextWidth",
+    text: "Single line input",
+    name: "InputText",
+    label: "Do you have any suggestions to improve our website?",
+    required: true,
+  },
+  {
+    icon: "faListCheck",
+    text: "Radio button",
+    name: "RadioButton",
+    label: "Multiple choice - 1 answer",
+    data: ["Radio 1", "Radio 2", "Radio 3"],
+    required: true,
+  },
+  {
+    icon: "faRectangleList",
+    text: "Categories",
+    name: "CategoryRating",
+    label: "Pick a subject and provide your feedback:",
+    data: ["Bug", "Content", "Other"],
+    required: true,
+  },
 ];
 
 export const iconMapping = {

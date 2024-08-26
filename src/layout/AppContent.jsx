@@ -13,7 +13,7 @@ import CreateForm from "../pages/admin/create";
 const AppContent = ({ setActive }) => {
   return (
     <>
-      <div className="flex justify-center h-full w-full">
+      <div className="flex justify-center h-[full] w-full">
         <Routes>
           <Route path="/" element={<Home setActive={setActive} />} />
           <Route path="/home" element={<Home setActive={setActive} />} />
