@@ -127,53 +127,58 @@ const EditPanel = ({
             />
           </FormGroup>
         </div>
-        {/* {editPanelData[0]?.required && (
-          <>
-            <div className="flex justify-start mt-2">
-              <p className="text-sm">Error Message</p>
-            </div>
-            <div className="flex mt-1">
+
+        {editPanelData[0] &&
+        (editPanelData[0].name === "RadioButton" ||
+          editPanelData[0].name === "CategoryRating") ? (
+          <div className="flex">
+            <div className="flex flex-col pb-3">
               <input
                 type="text"
                 name="name"
-                className="border-b-2 border-[#2196F3] focus:border-[#2196F3] focus:outline-none w-full mr-2"
-                value={editPanelData[0].errorInput || ""}
-                onChange={(e) => handleAddErrorInput(e.target.value)}
+                className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56 mb-2"
+                value={editPanelData[0]?.data?.[0] || ""}
+                onChange={(e) => handleRadioInputChange(e.target.value, 0)}
+              />
+              <input
+                type="text"
+                name="name"
+                className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56 mb-2"
+                value={editPanelData[0]?.data?.[1] || ""}
+                onChange={(e) => handleRadioInputChange(e.target.value, 1)}
+              />
+              <input
+                type="text"
+                name="name"
+                className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56"
+                value={editPanelData[0]?.data?.[2] || ""}
+                onChange={(e) => handleRadioInputChange(e.target.value, 2)}
               />
             </div>
-            <div className="flex justify-start text-grey-dark">
-              <p className="text-sm mt-[2px]">Helper Text</p>
-            </div>
-          </>
-        )} */}
-
-        <div className="flex">
-          <div className="flex  flex-col pb-3">
-            <input
-              type="text"
-              name="name"
-              className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56 mb-2"
-              value={editPanelData[0] && editPanelData[0].data && editPanelData[0].data[0] || ""}
-              onChange={(e) => handleRadioInputChange(e.target.value, 0)}
-            />
-
-            <input
-              type="text"
-              name="name"
-              className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56 mb-2"
-              value={editPanelData[0] && editPanelData[0].data && editPanelData[0].data[1] || ""}
-              onChange={(e) => handleRadioInputChange(e.target.value, 1)}
-            />
-
-            <input
-              type="text"
-              name="name"
-              className="border-b-2 border-[#7b7979] focus:bg-grey focus:outline-none w-56"
-              value={editPanelData[0] && editPanelData[0].data && editPanelData[0].data[2] || ""}
-              onChange={(e) => handleRadioInputChange(e.target.value, 2)}
-            />
           </div>
-        </div>
+        ) : (
+          <>
+            {editPanelData[0]?.required && (
+              <>
+                <div className="flex justify-start mt-2">
+                  <p className="text-sm">Error Message</p>
+                </div>
+                <div className="flex mt-1">
+                  <input
+                    type="text"
+                    name="name"
+                    className="border-b-2 border-[#2196F3] focus:border-[#2196F3] focus:outline-none w-full mr-2"
+                    value={editPanelData[0]?.errorInput || ""}
+                    onChange={(e) => handleAddErrorInput(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-start text-grey-dark">
+                  <p className="text-sm mt-[2px]">Helper Text</p>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </div>
 
       <div className="flex justify-start my-2.5">

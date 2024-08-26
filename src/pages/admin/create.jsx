@@ -191,7 +191,6 @@ const CreateForm = ({ setActive }) => {
                       updateComponentState(component.id, newState, component)
                     }
                     hasError={hasError}
-                    // setOpenEditPanel={() => handleOpenEditPanel}
                     removeComponent={() => removeComponent(component.id)}
                     handleOpenEditPanel={handleOpenEditPanel}
                     components={components}
