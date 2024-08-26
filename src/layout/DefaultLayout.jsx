@@ -9,8 +9,14 @@ const DefaultLayout = ({ active, setActive }) => {
           active === "home" ? "bg-grey-dark" : "bg-grey"
         }`}
       >
-        <div className="mt-2 shadow w-full overflow-y-auto">
-          <NavBar active={active} setActive={setActive} />
+        <div
+          className={`shadow overflow-y-auto w-full ${
+            active !== "admin" && "mt - 2"
+          } `}
+        >
+          {active !== "admin" && (
+            <NavBar active={active} setActive={setActive} />
+          )}
           <div className="flex flex-grow justify-center">
             <AppContent setActive={setActive} />
           </div>

@@ -7,6 +7,8 @@ import Work from "../pages/work";
 import Blog from "../pages/blog";
 import Contact from "../pages/contact";
 import Error from "../pages/404";
+import AdminIndex from "../pages/admin";
+import CreateForm from "../pages/admin/create";
 
 const AppContent = ({ setActive }) => {
   return (
@@ -24,7 +26,12 @@ const AppContent = ({ setActive }) => {
           <Route path="/work" element={<Work setActive={setActive} />} />
           <Route path="/blog" element={<Blog setActive={setActive} />} />
           <Route path="/contact" element={<Contact setActive={setActive} />} />
-          <Route path="*" element={<Error/>} />
+          <Route path="/admin" element={<AdminIndex setActive={setActive} />} />
+          <Route
+            path="/admin/create"
+            element={<CreateForm setActive={setActive} />}
+          />
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </>

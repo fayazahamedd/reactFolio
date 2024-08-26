@@ -1,3 +1,22 @@
+import {
+  faTextHeight,
+  faListNumeric,
+  faStar,
+  faSmileBeam,
+  faListCheck,
+  faRectangleList,
+  faPen,
+  faPlus,
+  faThumbsUp,
+  faLessThan,
+  faFrown,
+  faGrimace,
+  faMeh,
+  faSmile,
+  faGrinStars,
+} from "@fortawesome/free-solid-svg-icons";
+import { faTextWidth } from "@fortawesome/free-solid-svg-icons/faTextWidth";
+
 const skills = [
   {
     technology: "HTML",
@@ -54,6 +73,30 @@ const skills = [
     last_month: 90,
   },
 ];
+
+export const feedbackIcons = [
+  { icon: "faTextHeight", text: "Textarea", component: "TextArea" },
+  {
+    icon: "faListNumeric",
+    text: "Numeric rating",
+    component: "NumbericRating",
+  },
+  { icon: "faStar", text: "Star rating", component: "StarRating" },
+  { icon: "faSmileBeam", text: "Smiley rating", component: "EmojiRating" },
+  { icon: "faTextWidth", text: "Single line input", component: "InputText" },
+  { icon: "faListCheck", text: "Radio button", component: "RadioButton" },
+  { icon: "faRectangleList", text: "Categories", component: "CategoryRating" },
+];
+
+export const iconMapping = {
+  faTextHeight: faTextHeight,
+  faListNumeric: faListNumeric,
+  faStar: faStar,
+  faSmileBeam: faSmileBeam,
+  faTextWidth: faTextWidth,
+  faListCheck: faListCheck,
+  faRectangleList: faRectangleList,
+};
 
 export const data = [
   {
@@ -148,3 +191,11 @@ export const projectData = [
 ];
 
 export default skills;
+
+export const emojis = [
+  { icon: faFrown, color: "text-red-500" }, // 1-star rating
+  { icon: faGrimace, color: "text-orange-500" }, // 2-star rating
+  { icon: faMeh, color: "text-yellow-500" }, // 3-star rating
+  { icon: faSmile, color: "text-green-500" }, // 4-star rating
+  { icon: faGrinStars, color: "text-blue-500" }, // 5-star rating
+];

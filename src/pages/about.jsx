@@ -28,7 +28,7 @@ const About = ({ setActive }) => {
             <p className="uppercase font-bold text-blue mt-5 text-2xl">
               My intro
             </p>
-            <p className="font-mediums text-true-black mt-6 text-left font-semibold italic font-w[12px]">
+            <p className="font-mediums text-true-black mt-2 text-left font-semibold italic font-w[12px]">
               To become a successful expert in the field of Information
               Technology by channelizing my technical knowledge and skills to
               ensure personal and professional growth and to contribute to the
@@ -75,12 +75,12 @@ const About = ({ setActive }) => {
               </div>
             </div>
 
-            <div className="my-5 h-10 items-center">
+            <div className="mt-5 h-10 items-center">
               <p className="uppercase font-bold text-blue mb-8">
                 Extra curricular activities
               </p>
 
-              <ul className="flex flex-row mt-2 items-center justify-between mr-2">
+              <ul className="flex flex-row items-center justify-between mr-2">
                 <div className="flex flex-row">
                   <li className="border border-r-8 p-2 rounded-full border-blue w-10 ">
                     <FontAwesomeIcon icon={faMusic} />
@@ -114,7 +114,7 @@ const About = ({ setActive }) => {
               </ul>
             </div>
 
-            <div className="flex mt-[13%] mb-auto text-3xl font-medium italic">
+            <div className="flex mt-[10%] mb-auto text-xl font-medium italic">
               Quotes can come from all sorts of sources, but three of the most
               likely ones you'll use are - Other Blogs
             </div>

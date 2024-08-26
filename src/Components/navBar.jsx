@@ -28,19 +28,23 @@ export const navLinks = [
     id: "contact",
     title: "CONTACT",
   },
+  {
+    id: "admin",
+    title: "IS ADMIN ?",
+  },
 ];
 
 const NavBar = ({ active, setActive }) => {
   return (
-    <div>
+    <div className="w-[100%]">
       <nav className=" flex flex-row items-center justify-between">
-        <span className="justify-stretch text-[20px] font-extrabold uppercase text-blue mx-10">
+        <span className="justify-stretch text-[18px] font-extrabold uppercase text-blue mx-10">
           Fayaz Ahamed D
         </span>
         <ul className="flex justify-between flex-wrap">
           {navLinks.map((item, index) => (
             <li
-              className={` font-semibold text-[20px] p-2 mr-10 ${
+              className={` font-semibold text-[17px] p-2 mr-10 ${
                 active === item.id ? "text-blue" : "text-true-black"
               }`}
               key={index}
