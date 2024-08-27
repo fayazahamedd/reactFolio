@@ -328,7 +328,7 @@ export const RadioButton = ({
   const data = components.filter((item) => item.name === "RadioButton");
   return (
     <div className="flex flex-col justify-start m-2 h-fit p-2 rounded-md shadow-lg">
-      <p className="flex justify-start text-sm text-start">{data[0].id}</p>
+      <p className="flex justify-start text-sm text-start">{data[0].label}</p>
       <div className="flex mt-2">
         <FormControl>
           <RadioGroup

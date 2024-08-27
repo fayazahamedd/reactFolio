@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function FormDialog({ open, setOpen, isEdit }) {
   const [name, setName] = React.useState("");
@@ -45,6 +46,7 @@ export default function FormDialog({ open, setOpen, isEdit }) {
             {
               !isEdit && navigate("create");
             }
+            toast.info("Saved Locally");
           },
         }}
       >

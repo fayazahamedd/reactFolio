@@ -18,8 +18,10 @@ import {
 } from "./components";
 import RightPanel from "./panel/rightPanel";
 import EditPanel from "./panel/editPanel";
-import { Edit } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const componentMapping = {
   TextArea,
@@ -61,13 +63,14 @@ const CreateForm = ({ setActive }) => {
 
   const addComponent = (componentName) => {
     if (components.length >= 7) {
-      alert("Maximum 7 components are allowed.");
+      toast.warning("Maximum 7 components are allowed.");
       return;
     }
     setComponents((prevComponents) => [
       ...prevComponents,
       { ...componentName, id: Date.now() },
     ]);
+    toast.info(`Added ${componentName.text} Locally`);
   };
 
   const updateComponentState = (id, newState, component) => {
@@ -118,6 +121,7 @@ const CreateForm = ({ setActive }) => {
       const { [id]: _, ...remainingErrors } = prevErrors;
       return remainingErrors;
     });
+    toast.info("Deleted Locally");
   };
 
   useEffect(() => {
@@ -130,37 +134,77 @@ const CreateForm = ({ setActive }) => {
   };
 
   const handleSave = () => {
+    toast.info("Saved Locally");
+  };
+
+  const handlePublish = async () => {
+    // Check if at least one component is added
     if (Object.entries(components).length === 0) {
-      alert("Please add at least one component");
+      toast.warning("Please add at least one component");
       return;
     }
 
+    // Check if all component fields are updated
     if (!components.every((component) => component.id in componentStates)) {
-      alert("Please update all the fields");
+      toast.warning("Please update all the fields");
       return;
     }
 
+    // Check if inputText is provided when inputSwitch is enabled
     if (inputSwitch && inputText.length <= 0) {
-      alert("Please add Show based on URL conditions");
+      toast.warning("Please add Show based on URL conditions");
       return;
     }
 
-    if (dateSwitch && dateValue === null) {
-      alert("Please add Show based on Date conditions");
+    // Check if dateValue is provided when dateSwitch is enabled
+    if (dateSwitch && !dateValue) {
+      toast.warning("Please add Show based on Date conditions");
       return;
     }
 
-    if (timeSwitch && timeValue === null) {
-      alert("Please add Show based on Time conditions");
+    // Check if timeValue is provided when timeSwitch is enabled
+    if (timeSwitch && !timeValue) {
+      toast.warning("Please add Show based on Time conditions");
       return;
     }
-    const rightPanelData = {inputSwitch: inputSwitch, inputText: inputText, timeValue: timeValue, timeSwitch: timeSwitch, dateValue: dateValue, dateSwitch: dateSwitch , header: heading_name};
-    const jsonData = { componentData: components, rightPanelData: rightPanelData}
-    console.log('jsonData', jsonData)
-  }
 
-  console.log('components', components)
-  console.log('componentStates', componentStates)
+    // Prepare the rightPanelData and jsonData
+    const rightPanelData = {
+      inputSwitch: inputSwitch,
+      inputText: inputText,
+      timeValue: timeValue,
+      timeSwitch: timeSwitch,
+      dateValue: dateValue,
+      dateSwitch: dateSwitch,
+      header: heading_name,
+    };
+
+    const jsonData = {
+      componentData: components,
+      rightPanelData: rightPanelData,
+    };
+
+    console.log("jsonData", jsonData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/feedback",
+        jsonData // Send jsonData instead of feedbackData
+      );
+      toast.info(response.data.message);
+      console.log(response.data.message);
+      setComponents([]);
+      setComponentStates({});
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      toast.error("Error submitting feedback: " + error.message);
+    }
+  };
+
+  console.log("components", components);
+  console.log("componentStates", componentStates);
+
+  const notify = () => toast.info("Wow so easy!");
 
   return (
     <div className="flex flex-col w-[100vw] mr-2 overflow-x-hidden">
@@ -176,12 +220,16 @@ const CreateForm = ({ setActive }) => {
         <div className="flex justify-between my-2.5">
           <button
             className="bg-[#2196F3] mx-4 text-white rounded p-2 w-20"
-            type="submit"
+            type="button"
             onClick={handleSave}
           >
             SAVE
           </button>
-          <button className="bg-[#2E7D32] mx-4 text-white text-center rounded p-2 w-24">
+          <button
+            className="bg-[#2E7D32] mx-4 text-white text-center rounded p-2 w-24"
+            type="submit"
+            onClick={handlePublish}
+          >
             PUBLISH
           </button>
         </div>
@@ -260,6 +308,7 @@ const CreateForm = ({ setActive }) => {
               componentStates={componentStates}
               setComponents={setComponents}
               setComponentStates={setComponentStates}
+              handleToast={handleSave}
             />
           ) : (
             <RightPanel
@@ -281,6 +330,7 @@ const CreateForm = ({ setActive }) => {
         </div>
       </div>
       <FormDialog open={open} setOpen={setOpen} isEdit={true} />
+      <ToastContainer />
     </div>
   );
 };

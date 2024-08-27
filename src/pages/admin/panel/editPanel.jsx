@@ -11,6 +11,7 @@ const EditPanel = ({
   componentStates = {}, // Default to empty object if not provided
   setComponents,
   setComponentStates,
+  handleToast
 }) => {
   const handlePanelSubmit = () => {
     if (
@@ -43,6 +44,7 @@ const EditPanel = ({
 
     setComponents(updatedComponents);
     setComponentStates(updatedComponentState);
+    handleToast()
   };
 
   const handleSwitchChange = () => {
@@ -183,7 +185,7 @@ const EditPanel = ({
 
       <div className="flex justify-start my-2.5">
         <button
-          type="submit"
+          type="button"
           className="bg-[#2196F3] mx-4 text-white rounded p-2 w-20"
           onClick={handlePanelSubmit}
         >
@@ -191,6 +193,7 @@ const EditPanel = ({
         </button>
         <button
           className="bg-[#00000040] outline outline-grey text-true-black text-center rounded p-2 w-24"
+          type="button"
           onClick={closePanel}
         >
           CANCEL
