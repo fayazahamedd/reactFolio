@@ -6,6 +6,7 @@ import {
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import FormDialog from "../../Components/dialog";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -46,6 +47,7 @@ const data = [
 ];
 
 const AdminIndex = ({ setActive }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -105,7 +107,10 @@ const AdminIndex = ({ setActive }) => {
                   <p className="my-1">{item.date_published}</p>
                 </div>
               </div>
-              <button className="bg-[#9C27B0] mx-4 text-white rounded p-2 mt-8">
+              <button
+                className="bg-[#9C27B0] mx-4 text-white rounded p-2 mt-8"
+                onClick={() => navigate("view")}
+              >
                 VIEW SUBMISSION
               </button>
               <div className="flex justify-between my-2.5">

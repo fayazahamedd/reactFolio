@@ -9,6 +9,7 @@ import Contact from "../pages/contact";
 import Error from "../pages/404";
 import AdminIndex from "../pages/admin";
 import CreateForm from "../pages/admin/create";
+import ViewSubmission from "../pages/admin/viewSubmission";
 
 const AppContent = ({ setActive }) => {
   return (
@@ -30,6 +31,10 @@ const AppContent = ({ setActive }) => {
           <Route
             path="/admin/create"
             element={<CreateForm setActive={setActive} />}
+          />
+          <Route
+            path="/admin/view"
+            element={<ViewSubmission setActive={setActive} />}
           />
           <Route path="*" element={<Error />} />
         </Routes>

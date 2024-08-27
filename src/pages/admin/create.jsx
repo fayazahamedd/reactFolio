@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import Draggable from "react-draggable";
 import FormDialog from "../../Components/dialog";
 import {
   TextArea,
@@ -18,6 +19,7 @@ import {
 import RightPanel from "./panel/rightPanel";
 import EditPanel from "./panel/editPanel";
 import { Edit } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const componentMapping = {
   TextArea,
@@ -30,6 +32,7 @@ const componentMapping = {
 };
 
 const CreateForm = ({ setActive }) => {
+  const navigate = useNavigate();
   const heading_name = localStorage.getItem("heading_name");
   const [open, setOpen] = useState(false);
 
@@ -44,28 +47,23 @@ const CreateForm = ({ setActive }) => {
   const [timeValue, setTimeValue] = useState(null);
 
   // Component States
-  // const [inputTextArea, setInputTextArea] = useState("");
-  // const [numberRating, setNumberRating] = useState(null);
-  // const [startRating, setStartRating] = useState(0);
-  // const [emojiRating, setEmojiRating] = useState(null);
-  // const [inputTextRating, setInputTextRating] = useState("");
-  // const [radioButtonRating, setRadioButtonRating] = useState("");
-
   const [components, setComponents] = useState([]);
   const [componentStates, setComponentStates] = useState({});
   const [errorStates, setErrorStates] = useState({});
 
   const [openEditPanel, setOpenEditPanel] = useState(false);
   const [editPanelData, setEditPanelData] = useState([]);
-
-  console.log("components", components);
-  console.log("componentStates", componentStates);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     setActive("admin");
   }, [setActive]);
 
   const addComponent = (componentName) => {
+    if (components.length >= 7) {
+      alert("Maximum 7 components are allowed.");
+      return;
+    }
     setComponents((prevComponents) => [
       ...prevComponents,
       { ...componentName, id: Date.now() },
@@ -127,10 +125,42 @@ const CreateForm = ({ setActive }) => {
   }, [components]);
 
   const handleOpenEditPanel = (item) => {
-    console.log("edit", item);
     setEditPanelData(item);
     setOpenEditPanel(true);
   };
+
+  const handleSave = () => {
+    if (Object.entries(components).length === 0) {
+      alert("Please add at least one component");
+      return;
+    }
+
+    if (!components.every((component) => component.id in componentStates)) {
+      alert("Please update all the fields");
+      return;
+    }
+
+    if (inputSwitch && inputText.length <= 0) {
+      alert("Please add Show based on URL conditions");
+      return;
+    }
+
+    if (dateSwitch && dateValue === null) {
+      alert("Please add Show based on Date conditions");
+      return;
+    }
+
+    if (timeSwitch && timeValue === null) {
+      alert("Please add Show based on Time conditions");
+      return;
+    }
+    const rightPanelData = {inputSwitch: inputSwitch, inputText: inputText, timeValue: timeValue, timeSwitch: timeSwitch, dateValue: dateValue, dateSwitch: dateSwitch , header: heading_name};
+    const jsonData = { componentData: components, rightPanelData: rightPanelData}
+    console.log('jsonData', jsonData)
+  }
+
+  console.log('components', components)
+  console.log('componentStates', componentStates)
 
   return (
     <div className="flex flex-col w-[100vw] mr-2 overflow-x-hidden">
@@ -144,7 +174,11 @@ const CreateForm = ({ setActive }) => {
           </h1>
         </div>
         <div className="flex justify-between my-2.5">
-          <button className="bg-[#2196F3] mx-4 text-white rounded p-2 w-20">
+          <button
+            className="bg-[#2196F3] mx-4 text-white rounded p-2 w-20"
+            type="submit"
+            onClick={handleSave}
+          >
             SAVE
           </button>
           <button className="bg-[#2E7D32] mx-4 text-white text-center rounded p-2 w-24">
@@ -160,6 +194,7 @@ const CreateForm = ({ setActive }) => {
               <FontAwesomeIcon
                 className="w-3 h-3 cursor-pointer text-white"
                 icon={faLessThan}
+                onClick={() => navigate("/admin")}
               />
             </p>
             <h1 className="font-light text-white flex-grow text-center ml-2">
@@ -175,7 +210,7 @@ const CreateForm = ({ setActive }) => {
           </div>
 
           {/* Dynamic Panel */}
-          <div className="bg-white flex-col justify-start rounded-md w-full max-w-[400px] py-4">
+          <div className="bg-white flex-col justify-start rounded-md w-full max-w-[400px] py-4 relative">
             <p className="text-center font-serif">Add Dynamic panel</p>
 
             {components.map((component) => {
@@ -184,18 +219,32 @@ const CreateForm = ({ setActive }) => {
               const hasError = errorStates[component.id] || false;
 
               return (
-                <div key={component.id} className="relative">
-                  <Component
-                    {...componentState}
-                    updateState={(newState) =>
-                      updateComponentState(component.id, newState, component)
-                    }
-                    hasError={hasError}
-                    removeComponent={() => removeComponent(component.id)}
-                    handleOpenEditPanel={handleOpenEditPanel}
-                    components={components}
-                  />
-                </div>
+                <Draggable
+                  key={component.id}
+                  defaultPosition={{ x: 0, y: 0 }}
+                  bounds="parent" // Constrain dragging to the parent container
+                >
+                  <div
+                    className="relative"
+                    style={{
+                      transform: isHovering ? "translateY(10px)" : "none",
+                      transition: "transform 0.2s ease",
+                    }}
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                  >
+                    <Component
+                      {...componentState}
+                      updateState={(newState) =>
+                        updateComponentState(component.id, newState, component)
+                      }
+                      hasError={hasError}
+                      removeComponent={() => removeComponent(component.id)}
+                      handleOpenEditPanel={handleOpenEditPanel}
+                      components={components}
+                    />
+                  </div>
+                </Draggable>
               );
             })}
           </div>
@@ -213,7 +262,21 @@ const CreateForm = ({ setActive }) => {
               setComponentStates={setComponentStates}
             />
           ) : (
-            <RightPanel addComponent={addComponent} />
+            <RightPanel
+              addComponent={addComponent}
+              inputText={inputText}
+              setInputTextURL={setInputTextURL}
+              dateValue={dateValue}
+              setDateValue={setDateValue}
+              timeValue={timeValue}
+              setTimeValue={setTimeValue}
+              inputSwitch={inputSwitch}
+              setInputSwitch={setInputSwitch}
+              dateSwitch={dateSwitch}
+              setSwitchDate={setSwitchDate}
+              timeSwitch={timeSwitch}
+              setTimeSwitch={setTimeSwitch}
+            />
           )}
         </div>
       </div>

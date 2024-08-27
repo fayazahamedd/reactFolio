@@ -169,7 +169,6 @@ export const StarRating = ({
   const handleStartRating = (index) => {
     updateState({ startRating: index + 1 });
   };
-  console.log("1------", data);
 
   return (
     <div className="flex flex-col justify-start m-2 h-fit p-2 rounded-md shadow-lg">
@@ -327,7 +326,6 @@ export const RadioButton = ({
   components,
 }) => {
   const data = components.filter((item) => item.name === "RadioButton");
-  console.log("1------", data);
   return (
     <div className="flex flex-col justify-start m-2 h-fit p-2 rounded-md shadow-lg">
       <p className="flex justify-start text-sm text-start">{data[0].id}</p>
@@ -339,16 +337,14 @@ export const RadioButton = ({
             value={radioButtonRating}
             onChange={(e) => updateState({ radioButtonRating: e.target.value })}
           >
-            {data[0] &&
-              data[0].data &&
-              data[0].data.map((item, index) => (
-                <FormControlLabel
-                  value={item}
-                  control={<Radio />}
-                  label={item}
-                  key={item.id}
-                />
-              ))}
+            {data[0] && data[0].data && data[0].data.map((item, index) => (
+              <FormControlLabel
+                value={item}
+                control={<Radio />}
+                label={item}
+                key={item}
+              />
+            ))}
           </RadioGroup>
         </FormControl>
       </div>
@@ -387,20 +383,19 @@ export const CategoryRating = ({
     <div className="flex flex-col justify-start m-2 h-fit p-2 rounded-md shadow-lg">
       <p className="flex justify-start text-sm text-start ">{data[0].label}</p>
       <div className="flex justify-between mr-1 mt-2">
-        {data[0] &&
-          data[0].data.map((item, index) => (
-            <div
-              key={index}
-              className={`font-lights px-6 py-2 border mt-2 cursor-pointer text-center items-center text-sm ${
-                index === categoryRating
-                  ? "border-[#5578F4] text-[#5578F4]"
-                  : "border-[#DBD6D6]"
-              }`}
-              onClick={() => updateState({ categoryRating: index })}
-            >
-              {item}
-            </div>
-          ))}
+        {data[0] && data[0].data.map((item, index) => (
+          <div
+            key={index}
+            className={`font-lights px-6 py-2 border mt-2 cursor-pointer text-center items-center text-sm ${
+              index === categoryRating
+                ? "border-[#5578F4] text-[#5578F4]"
+                : "border-[#DBD6D6]"
+            }`}
+            onClick={() => updateState({ categoryRating: index })}
+          >
+            {item}
+          </div>
+        ))}
       </div>
       <div className="flex justify-end mt-3 mr-1.5">
         <FontAwesomeIcon

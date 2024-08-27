@@ -9,14 +9,21 @@ import {
 import { feedbackIcons } from "../../../assets/data";
 import { iconMapping } from "../../../assets/data";
 
-const RightPanel = ({ addComponent }) => {
-  const [inputSwitch, setInputSwitch] = useState(true);
-  const [dateSwitch, setSwitchDate] = useState(true);
-  const [timeSwitch, setTimeSwitch] = useState(true);
-  const [inputText, setInputTextURL] = useState("");
-  const [dateValue, setDateValue] = useState(null);
-  const [timeValue, setTimeValue] = useState(null);
-
+const RightPanel = ({
+  addComponent,
+  inputText,
+  setInputTextURL,
+  dateValue,
+  setDateValue,
+  timeValue,
+  setTimeValue,
+  inputSwitch,
+  setInputSwitch,
+  dateSwitch,
+  setSwitchDate,
+  timeSwitch,
+  setTimeSwitch,
+}) => {
   return (
     <div className="flex flex-col bg-white pt-5 shadow-md">
       <h1 className="flex text-true-black font-semibold text-xl ml-4">
