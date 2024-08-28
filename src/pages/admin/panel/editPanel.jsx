@@ -77,12 +77,12 @@ const EditPanel = ({
   };
 
   const handleRadioInputChange = (value, index) => {
-    const updatedData = [...editPanelData[0].data]; // Copy the existing data array
-    updatedData[index] = value; // Update the specific index with the new value
+    const updatedData = [...editPanelData[0].data]; 
+    updatedData[index] = value;
 
     const updatedItem = {
-      ...editPanelData[0], // Copy the existing edit panel data
-      data: updatedData, // Update the data array with the modified one
+      ...editPanelData[0], 
+      data: updatedData, 
     };
 
     setEditPanelData([updatedItem]); // Update the state
