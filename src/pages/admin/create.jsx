@@ -117,9 +117,6 @@ const CreateForm = ({ setActive }) => {
   };
   
 
-  console.log('components', components)
-  console.log('componentStates', componentStates)
-
   const validateComponents = () => {
     let hasError = false;
     const newErrorStates = {};
@@ -219,15 +216,12 @@ const CreateForm = ({ setActive }) => {
       rightPanelData: rightPanelData,
     };
 
-    // console.log("jsonData", jsonData);
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/feedback",
         jsonData // Send jsonData instead of feedbackData
       );
       toast.info(response.data.message);
-      // console.log(response.data.message);
       setComponents([]);
       setComponentStates({});
       setOpenEditPanel(false);

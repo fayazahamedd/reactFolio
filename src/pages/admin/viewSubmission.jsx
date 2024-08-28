@@ -14,8 +14,6 @@ const ViewSubmission = ({ setActive }) => {
 
   const [overView, setOverView] = useState(false);
 
-  console.log("location", location.state);
-
   const { header, publishedDate, submitted, viewed, inputText, timeValue } =
     location.state.rightPanelData;
 
@@ -38,8 +36,6 @@ const ViewSubmission = ({ setActive }) => {
         rating: rating,
       };
     });
-
-  console.log(extractedData);
 
   useEffect(() => {
     setActive("admin");
@@ -97,7 +93,7 @@ const ViewSubmission = ({ setActive }) => {
         </div>
 
         <div className="flex flex-col mx-3 border border-grey-dark shadow-2xl rounded-md my-4">
-          <div className="flex justify-between ">
+          <div className="flex justify-between mx-2">
             <div className="flex py-2 px-1">
               <p className="text-xl font-semibold text-[#5578F4] text-left">{header}</p>
             </div>
@@ -111,11 +107,11 @@ const ViewSubmission = ({ setActive }) => {
             </div>
           </div>
           {overView && (
-            <div className="flex flex-col justify-start  pl-1">
+            <div className="flex flex-col justify-start pl-1 mx-3">
               {extractedData.map((item, index) => (
                 <div className="mb-2 ml-2"  key={index}>
                   <p className="flex text-sm text-true-black font-mediums">{item.label}</p>
-                  <p className="flex text-xs font-semibold text-grey-dark">{item.rating}</p>
+                  <p className="flex text-xs font-semibold text-grey-dark text-left">{item.rating}</p>
                 </div>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -19,7 +19,7 @@ const getNextDay = (date) => {
   return date.add(0, "day").utc();
 };
 
-export const DatePickerFormComp = ({ value, setValue, disabled}) => {
+export const DatePickerFormComp = ({ value, setValue, disabled }) => {
   const handleDateChange = (newValue) => {
     if (newValue) {
       //   const nextDay = getNextDay(newValue);
@@ -33,7 +33,7 @@ export const DatePickerFormComp = ({ value, setValue, disabled}) => {
         label="Start date"
         renderInput={(params) => <TextField {...params} fullWidth />}
         className="flex-grow"
-        value={value}
+        value={value ? dayjs(value) : null} // Ensure value is correctly passed
         onChange={handleDateChange}
         disabled={disabled}
       />
@@ -44,8 +44,14 @@ export const DatePickerFormComp = ({ value, setValue, disabled}) => {
 export const TimePickerFormComp = ({ value, setValue, disabled }) => {
   const [selectedTime, setSelectedTime] = useState(null);
 
+  useEffect(() => {
+    if (value) {
+      const istTime = dayjs(value, "HH:mm").tz("Asia/Kolkata");
+      setSelectedTime(istTime);
+    }
+  }, [value]);
+
   const handleChangeTime = (newValue) => {
-    console.log("----------------------------------------------------------------")
     if (newValue) {
       const istTime = dayjs(newValue).tz("Asia/Kolkata");
       setSelectedTime(istTime);
@@ -62,7 +68,7 @@ export const TimePickerFormComp = ({ value, setValue, disabled }) => {
         label="Select Time"
         renderInput={(params) => <TextField {...params} fullWidth />}
         className="flex-grow"
-        value={selectedTime ? dayjs(selectedTime) : null}
+        value={selectedTime} 
         onChange={handleChangeTime}
         disabled={disabled}
       />

@@ -7,11 +7,11 @@ const EditPanel = ({
   setOpenEditPanel,
   editPanelData,
   setEditPanelData,
-  components = [], // Default to empty array if not provided
-  componentStates = {}, // Default to empty object if not provided
+  components = [],
+  componentStates = {},
   setComponents,
   setComponentStates,
-  handleToast
+  handleToast,
 }) => {
   const handlePanelSubmit = () => {
     if (
@@ -20,7 +20,6 @@ const EditPanel = ({
       !editPanelData ||
       !editPanelData[0]
     ) {
-      console.error("Required data is missing.");
       return;
     }
 
@@ -44,7 +43,7 @@ const EditPanel = ({
 
     setComponents(updatedComponents);
     setComponentStates(updatedComponentState);
-    handleToast()
+    handleToast();
   };
 
   const handleSwitchChange = () => {
@@ -88,8 +87,6 @@ const EditPanel = ({
 
     setEditPanelData([updatedItem]); // Update the state
   };
-
-  console.log("editPanelData", editPanelData);
 
   return (
     <div className="flex flex-col bg-white pt-5 shadow-md pb-5 h-[100vh] overflow-y-hidden">

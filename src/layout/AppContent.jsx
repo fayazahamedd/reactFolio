@@ -10,6 +10,7 @@ import Error from "../pages/404";
 import AdminIndex from "../pages/admin";
 import CreateForm from "../pages/admin/create";
 import ViewSubmission from "../pages/admin/viewSubmission";
+import ViewModal from "../pages/admin/viewModal";
 
 const AppContent = ({ setActive }) => {
   return (
@@ -35,6 +36,10 @@ const AppContent = ({ setActive }) => {
           <Route
             path="/admin/view"
             element={<ViewSubmission setActive={setActive} />}
+          />
+          <Route
+            path="/admin/edit"
+            element={<ViewModal setActive={setActive} />}
           />
           <Route path="*" element={<Error />} />
         </Routes>

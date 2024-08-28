@@ -7,8 +7,6 @@ const Skills = ({ setActive }) => {
     setActive("skills");
   }, [setActive]);
 
-  console.log("skills", skills);
-
   return (
     <div className="flex flex-col items-center justify-center h-fit mb-6 ml-11 mr-14">
       <h3 className="text-blue font-extrabold text-[17px] capitalize">

@@ -173,7 +173,7 @@ export const StarRating = ({
   return (
     <div className="flex flex-col justify-start m-2 h-fit p-2 rounded-md shadow-lg">
       <p className="flex justify-start text-sm text-start ">
-        Give a star rating for the website
+        {data[0].label}
       </p>
       <div className="flex mt-3">
         {[...Array(5)].map((_, index) => (

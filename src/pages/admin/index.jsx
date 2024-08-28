@@ -31,7 +31,6 @@ const AdminIndex = ({ setActive }) => {
       setIsLoadingFetchData(false);
       setIsErrorFetchData(null);
     } catch (err) {
-      console.error("Error fetching feedback:", err);
       setIsErrorFetchData(err);
       setIsLoadingFetchData(false);
     }
@@ -59,15 +58,10 @@ const AdminIndex = ({ setActive }) => {
       const response = await axios.delete(
         `http://localhost:5000/api/feedback/${id}`
       );
-      console.log(response.data.message);
       toast.success(response.data.message);
       // Update the UI or state here after deletion if necessary
       fetchData();
     } catch (error) {
-      console.error(
-        "Failed to delete feedback:",
-        error.response ? error.response.data.error : error.message
-      );
       toast.error(
         "Failed to delete feedback:",
         error.response ? error.response.data.error : error.message
@@ -145,7 +139,9 @@ const AdminIndex = ({ setActive }) => {
                         VIEW SUBMISSION
                       </button>
                       <div className="flex justify-between my-5">
-                        <button className="bg-[#2E7D32] mx-4 text-white rounded p-2 w-20">
+                        <button className="bg-[#2E7D32] mx-4 text-white rounded p-2 w-20"
+                        onClick={() => navigate("edit", { state: item })}
+                        >
                           EDIT
                         </button>
                         <button
