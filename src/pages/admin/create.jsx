@@ -33,6 +33,21 @@ const componentMapping = {
   CategoryRating,
 };
 
+const creteDate = () => {
+  const date = new Date(new Date());
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const year = date.getFullYear();
+  const formattedDate = `${month}/${day}/${year}`;
+  return formattedDate;
+};
+
+const getRandomNumbers = (digits) => {
+  const min = Math.pow(10, digits - 1);
+  const max = Math.pow(10, digits) - 1;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 const CreateForm = ({ setActive }) => {
   const navigate = useNavigate();
   const heading_name = localStorage.getItem("heading_name");
@@ -86,7 +101,24 @@ const CreateForm = ({ setActive }) => {
       ...prevErrors,
       [id]: false, // Reset error state on update
     }));
+  
+    setComponents((prevComponents) => {
+      return prevComponents.map((comp) => {
+        if (comp.id === id) {
+          return {
+            ...comp,
+            ...component,
+            ...newState
+          };
+        }
+        return comp;
+      });
+    });
   };
+  
+
+  console.log('components', components)
+  console.log('componentStates', componentStates)
 
   const validateComponents = () => {
     let hasError = false;
@@ -177,6 +209,9 @@ const CreateForm = ({ setActive }) => {
       dateValue: dateValue,
       dateSwitch: dateSwitch,
       header: heading_name,
+      publishedDate: creteDate(),
+      submitted: getRandomNumbers(2),
+      viewed: getRandomNumbers(3),
     };
 
     const jsonData = {
@@ -184,7 +219,7 @@ const CreateForm = ({ setActive }) => {
       rightPanelData: rightPanelData,
     };
 
-    console.log("jsonData", jsonData);
+    // console.log("jsonData", jsonData);
 
     try {
       const response = await axios.post(
@@ -192,19 +227,15 @@ const CreateForm = ({ setActive }) => {
         jsonData // Send jsonData instead of feedbackData
       );
       toast.info(response.data.message);
-      console.log(response.data.message);
+      // console.log(response.data.message);
       setComponents([]);
       setComponentStates({});
+      setOpenEditPanel(false);
+      setTimeout( () => navigate("/admin"), 500);
     } catch (error) {
-      console.error("Error submitting feedback:", error);
       toast.error("Error submitting feedback: " + error.message);
     }
   };
-
-  console.log("components", components);
-  console.log("componentStates", componentStates);
-
-  const notify = () => toast.info("Wow so easy!");
 
   return (
     <div className="flex flex-col w-[100vw] mr-2 overflow-x-hidden">

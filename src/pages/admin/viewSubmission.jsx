@@ -1,20 +1,45 @@
-import { faUps } from "@fortawesome/free-brands-svg-icons/faUps";
 import {
   faArrowDown,
   faLessThan,
   faThumbsUp,
-  faUpDown,
-  faUpLong,
 } from "@fortawesome/free-solid-svg-icons";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ViewSubmission = ({ setActive }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [overView, setOverView] = useState(false);
+
+  console.log("location", location.state);
+
+  const { header, publishedDate, submitted, viewed, inputText, timeValue } =
+    location.state.rightPanelData;
+
+  const extractedData =
+    location.state &&
+    location.state.componentData.map((component) => {
+      const rating =
+        component.categoryRating ||
+        component.startRating ||
+        component.emojiRating ||
+        component.inputTextRating ||
+        component.radioButtonRating ||
+        component.inputTextArea ||
+        component.numberRating ||
+        null;
+
+      return {
+        label: component.label,
+        text: component.text,
+        rating: rating,
+      };
+    });
+
+  console.log(extractedData);
 
   useEffect(() => {
     setActive("admin");
@@ -36,58 +61,63 @@ const ViewSubmission = ({ setActive }) => {
           <div className="flex bg-[#5578F4] py-2 rounded-md justify-between">
             <div className="flex">
               <FontAwesomeIcon
-                className="w-3 h-3 mt-1 ml-4 cursor-pointer text-2xl"
+                className="w-3 h-3 mt-[7px] ml-4 cursor-pointer text-2xl"
                 icon={faLessThan}
                 onClick={() => navigate("/admin")}
               />
-              <h3 className="text-sm text-left ml-2">Generic Website Rating</h3>
+              <h3 className="text-base text-left ml-2">{header}</h3>
             </div>
 
-            <div className="flex pr-4">
-              <p>Created Date: 12/32/2323</p>
+            <div className="flex pr-4 text-base">
+              <p>Created Date: {publishedDate || "N/A"}</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col mx-6 text-sm text-true-black ml-28 mt-8 text-center font-extrabold">
           <div className="flex">
-            <p className="text-4xl">10</p>
-            <p className="text-4xl ml-[110px]">10</p>
+            <p className="text-4xl">{viewed || "N/A"}</p>
+            <p className="text-4xl ml-20">{submitted || "N/A"}</p>
           </div>
 
           <div className="flex text-sm font-lights text-grey-dark">
-            <p className="text-xs">VIEWS</p>
-            <p className="text-xs ml-24">Submitted</p>
+            <p className="text-xs ml-3">VIEWS</p>
+            <p className="text-xs ml-[86px]">Submitted</p>
           </div>
         </div>
 
-        <div className="flex flex-col text-xs font-semibolds text-left my-6 ml-[12px]">
-          <p className="m-1">Page URL</p>
-          <p className="m-1">Date: 23/03/2023</p>
-          <p className="m-1">Time: 23:03</p>
+        <div className="flex flex-col text-xs font-medium text-left my-6 ml-[12px]">
+          <p className="m-1">Page URL: {inputText || "N/A"}</p>
+          <p className="m-1">Date: {publishedDate}</p>
+          <p className="m-1">Time: {timeValue !== null ? timeValue : "N/A"}</p>
         </div>
 
         <div className="flex flex-col text-xl font-extrabold text-left ml-4">
           Feedback List
         </div>
 
-        <div className="flex flex-col mx-3 border mt-4">
+        <div className="flex flex-col mx-3 border border-grey-dark shadow-2xl rounded-md my-4">
           <div className="flex justify-between ">
             <div className="flex py-2 px-1">
-              <p className="text-xs text-[#5578F4] text-left">Feedback 1</p>
+              <p className="text-xl font-semibold text-[#5578F4] text-left">{header}</p>
             </div>
-            <div className="flex py-2 px-1">
-              <p className="text-xs text-true-black text-left">10/08/2024</p>
+            <div className="flex py-2 px-1 mt-1.5">
+              <p className="text-xs text-true-black text-left font-semibold">{publishedDate}</p>
               <FontAwesomeIcon
                 className="w-3 h-3 mt-[2px] ml-4 cursor-pointer text-2xl"
-                icon={overView ? faArrowDown : faArrowUp}
+                icon={!overView ? faArrowDown : faArrowUp}
                 onClick={() => setOverView((prev) => !prev)}
               />
             </div>
           </div>
           {overView && (
-            <div className="flex pl-1">
-              <p>afaf</p>
+            <div className="flex flex-col justify-start  pl-1">
+              {extractedData.map((item, index) => (
+                <div className="mb-2 ml-2"  key={index}>
+                  <p className="flex text-sm text-true-black font-mediums">{item.label}</p>
+                  <p className="flex text-xs font-semibold text-grey-dark">{item.rating}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
